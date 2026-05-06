@@ -1,10 +1,10 @@
 # NYC Traffic Collision Dashboard
 
-Interactive dashboard for exploring NYC motor vehicle collisions: spatial hotspots (density map), top reported contributing factors, monthly trends, and summary KPIs. Built with **Python**, **Pandas**, **Plotly**, and **Dash**.
+Interactive dashboard for exploring NYC motor vehicle collisions: spatial hotspots, top reported contributing factors, monthly trends, and summary KPIs. Built with **Python**, **Pandas**, **Plotly**, and **Dash**.
 
 ## Prerequisites
 
-- **Python 3.10+** (3.9+ should work)
+- **Python 3.9+**
 - NYC Open Data crash CSV (see [Data](#data))
 
 ## Dependencies
@@ -58,16 +58,16 @@ From the **project root** (same folder as `app.py`), with your virtual environme
 python app.py
 ```
 
-Open a browser at **http://127.0.0.1:8050/** (Dash default). Stop the server with `Ctrl+C`.
+Open a browser at **http://127.0.0.1:8050/**. Stop the server with `Ctrl+C`.
 
 - **Year / Borough / Time of day** filters update the map, charts, and summary cards together.
-- The map uses crashes with **3+ injuries or any fatality** for the density layer (see in-app subtitle).
+- The map uses crashes with **3+ injuries or any fatality** for the density layer.
 
 ## Example usage
 
 - Pick **2026** and **All Boroughs** to see citywide patterns for the latest year in the cleaned data.
 - Choose **Brooklyn** and **Afternoon** to compare subset counts with the summary cards and monthly trend.
-- Use the **contributing factors** bar chart to see the most frequent *reported* factor for vehicle 1 (`CONTRIBUTING FACTOR VEHICLE 1` in the source data).
+- Use the **contributing factors** bar chart to see the most frequent *reported* factor for vehicle.
 
 ## Project layout
 
