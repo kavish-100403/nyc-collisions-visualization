@@ -2,14 +2,13 @@ import pandas as pd
 import plotly.express as px
 from dash import Dash, dcc, html, Input, Output
 
-# Reference (Dash fundamentals/layout): https://dash.plotly.com/layout (accessed 2026-05-03)
-# Reference (Dash callbacks): https://dash.plotly.com/basic-callbacks (accessed 2026-05-03)
-# Reference (Plotly Express API): https://plotly.com/python/plotly-express/ (accessed 2026-05-03)
-# Reference (Plotly density_mapbox): https://plotly.com/python/mapbox-density-heatmaps/ (accessed 2026-05-03)
+# Reference (Dash fundamentals/layout): https://dash.plotly.com/layout
+# Reference (Dash callbacks): https://dash.plotly.com/basic-callbacks
+# Reference (Plotly Express API): https://plotly.com/python/plotly-express/
+# Reference (Plotly density_mapbox): https://plotly.com/python/mapbox-density-heatmaps/
 
-# -------------------------------------------------------------------
+
 # Data loading
-# -------------------------------------------------------------------
 df = pd.read_csv("data/processed/collisions_cleaned.csv")
 
 # Remove UNKNOWN from borough dropdown
@@ -30,9 +29,8 @@ time_options = [
     {"label": "Night: 9 PM - 5 AM", "value": "NIGHT"},
 ]
 
-# -------------------------------------------------------------------
+
 # Visual design system
-# -------------------------------------------------------------------
 COLORS = {
     "background": "#eef2f7",
     "card": "#ffffff",
@@ -87,13 +85,12 @@ DROPDOWN_STYLE = {
     "width": "220px",
 }
 
-# -------------------------------------------------------------------
+
 # Dash app
-# -------------------------------------------------------------------
-# Reference (Dash app init): https://dash.plotly.com/dash-core-components (accessed 2026-05-03)
+# Reference (Dash app init): https://dash.plotly.com/dash-core-components
 app = Dash(__name__)
 
-# Reference (Dash layout patterns): https://dash.plotly.com/layout (accessed 2026-05-03)
+# Reference (Dash layout patterns): https://dash.plotly.com/layout
 app.layout = html.Div(
     style=PAGE_STYLE,
     children=[
@@ -277,9 +274,7 @@ app.layout = html.Div(
 )
 
 
-# -------------------------------------------------------------------
 # Data filtering
-# -------------------------------------------------------------------
 def filter_data(selected_year, selected_borough, selected_time):
     filtered = df[df["YEAR"] == selected_year]
 
@@ -298,9 +293,7 @@ def filter_data(selected_year, selected_borough, selected_time):
     return filtered
 
 
-# -------------------------------------------------------------------
 # Visualizations
-# -------------------------------------------------------------------
 def create_map(filtered_df):
     # Reference (density mapbox usage & params): https://plotly.com/python/mapbox-density-heatmaps/ (accessed 2026-05-03)
     # Only include serious crashes (2+ injured or any fatality) so the
@@ -356,7 +349,7 @@ def create_map(filtered_df):
 
 
 def create_cause_chart(filtered_df):
-    # Reference (Plotly Express bar charts): https://plotly.com/python/bar-charts/ (accessed 2026-05-03)
+    # Reference (Plotly Express bar charts): https://plotly.com/python/bar-charts/
     cause_counts = (
         filtered_df["CONTRIBUTING FACTOR VEHICLE 1"]
         .replace("Unspecified", pd.NA)
@@ -418,7 +411,7 @@ def create_cause_chart(filtered_df):
 
 
 def create_trend_chart(filtered_df):
-    # Reference (Plotly Express line charts): https://plotly.com/python/line-charts/ (accessed 2026-05-03)
+    # Reference (Plotly Express line charts): https://plotly.com/python/line-charts/
     monthly = (
         filtered_df.groupby(["MONTH", "MONTH_NAME"])["CRASH DATE"]
         .count()
@@ -537,10 +530,8 @@ def create_summary_cards(filtered_df):
     ]
 
 
-# -------------------------------------------------------------------
 # Callback
-# -------------------------------------------------------------------
-# Reference (Dash callback decorator + Inputs/Outputs): https://dash.plotly.com/basic-callbacks (accessed 2026-05-03)
+# Reference (Dash callback decorator + Inputs/Outputs): https://dash.plotly.com/basic-callbacks
 @app.callback(
     Output("summary-cards", "children"),
     Output("map-graph", "figure"),

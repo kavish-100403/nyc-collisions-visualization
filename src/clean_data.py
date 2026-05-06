@@ -1,6 +1,13 @@
 import pandas as pd
 from pathlib import Path
 
+"""
+Clean NYC Open Data crash records into a smaller, dashboard-ready CSV.
+
+Input : data/raw/Motor_Vehicle_Collisions.csv
+Output: data/processed/collisions_cleaned.csv
+"""
+
 RAW_PATH = Path("data/raw/Motor_Vehicle_Collisions.csv")
 OUT_PATH = Path("data/processed/collisions_cleaned.csv")
 SAMPLE_PATH = Path("data/sample/collisions_sample.csv")
@@ -25,15 +32,16 @@ def main():
     print("Cleaning data...")
     df["CRASH DATE"] = pd.to_datetime(df["CRASH DATE"], errors="coerce")
 
+    # If we don't have a date or coordinates, we can't use the record in the dashboard views.
     df = df.dropna(subset=["CRASH DATE", "LATITUDE", "LONGITUDE"])
 
-    # Keep NYC-like coordinates only
+    # Quick sanity bounds to remove bad/misplaced coordinates.
     df = df[
         (df["LATITUDE"].between(40.45, 40.95))
         & (df["LONGITUDE"].between(-74.30, -73.65))
     ]
 
-    # Keep recent years for performance
+    # Keep recent years for performance (and to keep the dashboard focused on current patterns).
     df = df[df["CRASH DATE"].dt.year >= 2022]
 
     df["YEAR"] = df["CRASH DATE"].dt.year
